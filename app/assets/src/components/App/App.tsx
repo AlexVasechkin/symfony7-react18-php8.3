@@ -1,7 +1,17 @@
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from '../pages/HomePage';
+import AboutPage from '../pages/AboutPage';
+
 
 const App = () => {
-  return <div className={'layout'}>
-    <h1>This headline is rendered by React 18</h1>
+  return <div>
+    <Router>
+      <Routes>
+        <Route path={'/'} element={<HomePage />} />
+        <Route path={'/about'} element={<AboutPage />} />
+      </Routes>
+
+    </Router>
   </div>
 }
 

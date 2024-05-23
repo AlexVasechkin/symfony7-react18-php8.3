@@ -13,4 +13,10 @@ class HomeController extends AbstractController
     {
         return $this->render('base.html.twig');
     }
+
+    #[Route(path: '/about')]
+    public function aboutPage(): Response
+    {
+        return $this->render('base.html.twig');
+    }
 }
