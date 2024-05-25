@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: sr_db
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - sr-network
+
+  queue-bus:
+    container_name: sr_queue-bus
+    image: rabbitmq:3.7.5-management
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - sr-network
+
+  redis:
+    container_name: sr_redis
+    image: redis
+    ports:
+      - '6379:6379'
+    networks:
+      - sr-network
+
+volumes:
+  pg-data:
+
+networks:
+  - sr-network:
+      external: true

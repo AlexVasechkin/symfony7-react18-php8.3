@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  proxy:
+    container_name: sr_proxy
+    image: nginx:stable
+    command: ['nginx', '-g', 'daemon off;']
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - app-volume:/var/www/html
+    networks:
+      - sr-network
+
+  fpm:
+    container_name: sr_fpm
+    image: symfony-react:7-18-8.3-dev
+    command: ['php-fpm']
+    environment:
+      - APP_ENV=dev
+    ports:
+      - '9000:9000'
+    volumes:
+      - app-volume:/var/www/html
+    networks:
+      - sr-network
+
+volumes:
+  app-volume:
+
+networks:
+  sr-network:
+    external: true
